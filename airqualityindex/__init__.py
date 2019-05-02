@@ -1,1 +1,2 @@
-from .contactapi import *
+from .contactapi import RestApiRequestMaker
+__all__ = ['RestApiRequestMaker']
