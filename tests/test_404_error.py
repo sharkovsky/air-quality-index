@@ -1,17 +1,20 @@
 import airqualityindex as aqi
+import requests
+from requests.exceptions import HTTPError
 
 
 def test_404(requests_mock, mocker):
-    fake_url = 'http://123-fake-api.com'
 
-    requests_mock.get(fake_url + '/feed/city/?token=token',
-                      status_code='404',
+    requests_mock.get('http://api.waqi.info/feed/city/?token=token',
+                      status_code=requests.codes.not_found,
                       text='Not Found')
 
-    mocker.spy(aqi.RestApiRequestMaker, '_behaviour_in_case_of_404_error')
-    waqi = aqi.RestApiRequestMaker(fake_url, 'token')
+    mocker.spy(aqi.WAQI, '_behaviour_in_case_of_404_error')
+    waqi = aqi.WAQI('token')
 
-    waqi.print_city_feed('city')
+    try:
+        _ = waqi.get_air_quality('city')
+    except HTTPError as e:
+        assert e.response.status_code == requests.codes.not_found
 
-    assert waqi.latest_error_code == '404'
     assert waqi._behaviour_in_case_of_404_error.call_count == 1

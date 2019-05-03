@@ -7,11 +7,9 @@ pkg_meta = dict(
     name='airqualityindex',
     version=VERSION,
     packages=find_packages(exclude=['contrib', 'docs', 'tests']),
-    python_requires='!=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, <4',
+    python_requires='>=3.4, <4',
     install_requires=['requests'],
-    extras_require={
-        'test': ['pytest', 'pytest-mock', 'requests-mock'],
-    }
+    tests_require=['pytest', 'pytest-mock', 'requests-mock']
 )
 
 if __name__ == '__main__':

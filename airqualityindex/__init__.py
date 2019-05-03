@@ -1,2 +1,2 @@
-from .contactapi import RestApiRequestMaker
-__all__ = ['RestApiRequestMaker']
+from .waqi import WAQI
+__all__ = ['WAQI']
